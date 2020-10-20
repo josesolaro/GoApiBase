@@ -1,0 +1,2 @@
+# GoApiBase
+Template go api
