@@ -13,6 +13,7 @@ func SetURLMappgins(router *gin.Engine){
 	router.GET("/", ping)
 	router.NoRoute(noRoute)
 	router.NoMethod(notAllowed)
+
 }
 
 func ping(c *gin.Context){
