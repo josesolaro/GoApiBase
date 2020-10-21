@@ -7,11 +7,14 @@ import (
 	"ApiBase/src/api/controllers"
 	"ApiBase/src/api/repositories"
 	"ApiBase/src/api/services"
+	"ApiBase/src/api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 )
 
 var userRouteSet = wire.NewSet(
+	providers.Logger,
+	wire.Bind(new(utils.ILogger), new(*utils.Logger)),
 	providers.UserRepository,
 	wire.Bind(new(repositories.IUserRepository), new(*repositories.UserRepository)),
 	providers.UserService,
