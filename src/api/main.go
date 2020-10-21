@@ -2,6 +2,7 @@ package main
 
 import (
 	"ApiBase/src/api/app"
+	"ApiBase/src/api/configuration"
 	"ApiBase/src/api/controllers"
 	"os"
 )
@@ -24,6 +25,7 @@ func main(){
 		panic(err)
 	}
 
+	router.Use(configuration.DatabaseMiddleware())
 	controllers.SetURLMappgins(router)
 
 	router.Run(":8080")

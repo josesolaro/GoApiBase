@@ -5,24 +5,23 @@ import (
 	"ApiBase/src/api/models"
 	"fmt"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"os"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func DataBaseConnection(c *configuration.DB)(*gorm.DB, error){
+func DataBaseConnection(c *configuration.DB,scope string)(*gorm.DB, error){
 	var (
 		db *gorm.DB
 		err error
 	)
-	switch os.Getenv("SCOPE"){
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", c.Username, c.Password, c.Host,c.Name)
+	switch scope{
 	case "production":
-		dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", c.Username, c.Password, c.Host,c.Name)
 		db, err = gorm.Open("mysql",dsn)
 	case "local":
-		db, err = gorm.Open("sqlite3", ":memory:")
+		db, err = gorm.Open("mysql",dsn)
 		break
 	default:
-		db, err = gorm.Open("sqlite3", ":memory:")
+		db, err = gorm.Open("mysql",dsn)
 	}
 
 	if err != nil{
